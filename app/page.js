@@ -7,19 +7,18 @@ import PropertyList from "./components/PropertyList";
 import OurServices from "./components/OurServices";
 import Neighbour from "./components/Neighbour";
 import OurTeam from "./components/OurTeam";
-import Trendings from "./Trendings";
+import Trendings from "./components/Trendings";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 
 export default function Home() {
   return (
     <main className="">
-      <Navbar />
       <Banner />
       <WhoWeAre />
       <PropertyList />
       <OurServices />
-      <Neighbour />
+      {/* <Neighbour /> */}
       <OurTeam />
       <Trendings />
       <Testimonials />

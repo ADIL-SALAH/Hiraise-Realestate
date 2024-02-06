@@ -1,9 +1,10 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousal from './Carousal'
 import H4 from './H4'
 import H2 from './H2'
+import userAxios from '@/axios/userAxios.js'
 
 function Banner() {
 
@@ -16,9 +17,21 @@ function Banner() {
 
     ]
 
+    const [fetchedData, setFetchedData] = useState(null)
+
+    useEffect(() => {
+        userAxios.get('/banner').then((res) => {
+            setFetchedData(res?.data?.fetchedData)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
+
+
+
     const customArrow = ({ type, onClick, isEdge }) => {
         return (
-            <button onClick={onClick} disabled={isEdge} className={`absolute z-10 ${type === 'PREV' ? 'lg:left-0 lg:top-48 md:right-28 md:-top-20 top-64 right-24' : 'lg:right-5 lg:top-44 md:right-10 md:-top-[100px] top-[243px] right-10 rotate-180'}`}>
+            <button onClick={onClick} disabled={isEdge} className={`absolute z-10 ${type === 'PREV' ? 'lg:left-10 lg:top-36 md:right-28 md:-top-20 top-64 right-24' : 'lg:right-10 lg:top-[120px] md:right-10 md:-top-[100px] top-[243px] right-10 rotate-180'}`}>
                 <img src="/home/carousal button.png" alt="" className='md:w-auto w-20' />
             </button>
         )
@@ -44,7 +57,7 @@ function Banner() {
                 <div className='md:w-[700px] w-[380px] relative lg:hidden flex flex-col justify-center items-center'>
                     <div className='w-10 h-10 bg-blue-600 bg-gradient-to-t from-white opacity-50 rounded-full absolute bottom-96 right-52 md:block hidden'></div>
                     <div className=' w-full lg:absolute lg:block  lg:-bottom-32 lg:right-24 '>
-                        <Carousal items={carousalItems} itemsToShow={1} customArrow={customArrow} />
+                        <Carousal items={fetchedData} itemsToShow={1} customArrow={customArrow} />
 
                     </div>
                     <div className='w-20 h-20 bg-[#C3A67D] bg-gradient-to-tl from-white opacity-50 rounded-full absolute right-[770px] mt-16 '></div>
@@ -54,7 +67,7 @@ function Banner() {
             <div className='w-full relative lg:flex hidden justify-center items-center'>
                 <div className='w-10 h-10 bg-blue-600 bg-gradient-to-t from-white opacity-50 rounded-full absolute bottom-96 right-52 md:block hidden' ></div>
                 <div className='lg:w-[800px] w-2/3 lg:absolute lg:block  lg:-bottom-32 lg:right-24 '>
-                    <Carousal items={carousalItems} itemsToShow={1} customArrow={customArrow} />
+                    <Carousal items={fetchedData} itemsToShow={1} customArrow={customArrow} />
 
                 </div>
                 <div className='w-20 h-20 bg-[#C3A67D] bg-gradient-to-tl from-white opacity-50 rounded-full absolute right-[770px] md:mt-40 '></div>

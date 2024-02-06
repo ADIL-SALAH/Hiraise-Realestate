@@ -1,12 +1,24 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import H4 from './H4'
 import H2 from './H2'
 import Text from './Text'
 import Carousal from './Carousal'
+import userAxios from '@/axios/userAxios'
 
 function Testimonials() {
+
+
+    const [fetchedData, setFetchedData] = useState(null)
+
+    useEffect(() => {
+        userAxios.get('/testimonial').then((res) => {
+            setFetchedData(res?.data?.fetchedData)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
     const peopleSays = [
         {
@@ -45,9 +57,9 @@ function Testimonials() {
                     <H2 text={'Look What Our Customers Say!'} />
                     <Text text={'Fusce venenatis tellus a felis scelerisque, non pulvinar est pellentesque. '} />
                 </div>
-                <div className='lg:w-1/2 md:w-2/3 w-[90%] relative'>
+                <div className='lg:w-1/2 md:w-2/3 w-full relative'>
                     <div className='w-10 h-10 bg-[#C3A67D] bg-gradient-to-tl from-white opacity-50 rounded-full absolute bottom-10  right-10  '></div>
-                    <Carousal items={peopleSays} component={'testimonials'} customArrow={customArrow} />
+                    <Carousal items={fetchedData} component={'testimonials'} customArrow={customArrow} />
 
                     <div className='flex justify-center my-3'>
                         {/* {peopleSays.map((item, index) => (
